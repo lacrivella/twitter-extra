@@ -56,4 +56,18 @@ describe('app routes', () => {
         });
       });
   });
+
+  it('gets tweet by id', async() => {
+    const tweet = await Tweet.create({ handle: '@JonLovett', text: 'What a week' });
+    return request(app)
+      .get(`/api/v1/tweets/${tweet._id}`)
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.any(String),
+          handle: tweet.handle,
+          text: tweet.text,
+          __v: 0
+        });
+      });
+  });
 });
