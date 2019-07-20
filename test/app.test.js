@@ -35,4 +35,25 @@ describe('app routes', () => {
         });
       });
   });
+
+  it('gets all tweets', async() => {
+    const tweets = await Tweet.create([
+      { handle: '@fake', text: 'fake fake fake' },
+      { handle: '@robyn', text: 'I KEEP DANCIN ON MY OWN' },
+      { handle: '@lizzo', text: 'Why men great until they try to be great?'}
+    ]);
+    return request(app)
+      .get('/api/v1/tweets')
+      .then(res => {
+        const tweetsJSON = JSON.parse(JSON.stringify(tweets));
+        tweetsJSON.forEach((tweet) => {
+          expect(res.body).toContainEqual({ 
+            _id: tweet._id,
+            handle: tweet.handle,
+            text: tweet.text,
+            __v: 0
+          });
+        });
+      });
+  });
 });
