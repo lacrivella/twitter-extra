@@ -70,4 +70,13 @@ describe('app routes', () => {
         });
       });
   });
+
+  it('patch a tweet', async() => {
+    const tweet = await Tweet.create({ handel: '@'})
+    return request(app)
+      .patch(`/api/v1/tweets/${tweet._id}`)
+      .then(res => {
+
+    })
+  })
 });
