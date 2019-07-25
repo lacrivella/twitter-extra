@@ -85,4 +85,18 @@ describe('app routes', () => {
         });
       });
   });
+
+  it('deletes in a tweet', async() => {
+    const tweet = await Tweet.create({ handle: '@Queen', text: 'another one bites the dust' });
+    return request(app)
+      .delete(`/api/v1/tweets/${tweet._id}`)
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.any(String),
+          handle: tweet.handle,
+          text: tweet.text,
+          __v: 0
+        });
+      });
+  });
 });
