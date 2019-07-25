@@ -72,11 +72,17 @@ describe('app routes', () => {
   });
 
   it('patch a tweet', async() => {
-    const tweet = await Tweet.create({ handel: '@'})
+    const tweet = await Tweet.create({ handle: '@davidbowie', text: 'ground control to major tom' });
     return request(app)
       .patch(`/api/v1/tweets/${tweet._id}`)
+      .send({ text: 'sailors fighting in the dance hall' })
       .then(res => {
-
-    })
-  })
+        expect(res.body).toEqual({
+          _id: expect.any(String),
+          handle: tweet.handle,
+          text: 'sailors fighting in the dance hall',
+          __v: 0
+        });
+      });
+  });
 });
