@@ -19,10 +19,10 @@ describe('app routes', () => {
     return mongoose.connection.close();
   });
 
-  it('post a new tweet', () => {
+  it('post a new tweet with a random quote', () => {
     return request(app)
       .post('/api/v1/tweets')
-      .send({ 
+      .send({
         handle: '@fake',
         text: 'this is only a test'
       })
